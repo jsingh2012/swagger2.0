@@ -1,0 +1,320 @@
+swagger: '2.0'
+info:
+  description: This is a simple Cat Information Center Api
+  version: 1.0.0
+  title: OpenAPI Cat Information Service
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+  - name: cat
+    description: Everything about your Cats
+schemes:
+  - http
+paths:
+  /cats:
+    post:
+      tags:
+        - cat
+      summary: Add a new cat to the store
+      description: Creates a new cat in the store
+      operationId: addCat
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Cat object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Cat'
+      responses:
+        '201':
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Cat'
+        '400':
+          description: Bad request
+    get:
+      tags:
+        - cat
+      summary: Retrieves the list of all cats
+      description: Retrieves the list of all cats
+      operationId: listCats
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successfully listed
+          schema:
+            $ref: '#/definitions/CatsResponse'
+  /multipages:
+    post:
+      tags:
+      - cat
+      summary: "Takes a list of images and run pipeline including stitch"
+      description: "Runs pipeline for the provided images and stitches images that\
+        \ are needed to be stitched.\nThen, runs the whole pipeline on the stitched\
+        \ image, too.\nNote: Image is optional if imageN is provided in multi-part\
+        \ formData.\nSee [/multipages/doc](#/OCR/multipages_doc)\nNote: We officially\
+        \ only support png and jpeg data and the image size is limited to 7000x7000\
+        \ pixels\n"
+      operationId: "multi_pages_request"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "pdf"
+        in: "formData"
+        description: "PDF file content. We will consider imageN parameters only if\
+          \ pdf parameter is missing from request."
+        required: false
+        type: "file"
+      - name: "image0"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image1"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image2"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image3"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image4"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image5"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image6"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image7"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image8"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "image9"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "multipages_input"
+        in: "formData"
+        description: "Important: Due to openapi v2.0 issues, see /multipages_request\
+          \ for input model of multipages_input.  See\n[/multipages/doc](#/OCR/multipages_doc)\n"
+        required: true
+        type: "string"
+      - name: "X_Client_Trace_Id"
+        in: "header"
+        description: "Optional, unique ID provided by the caller of the API to track\
+          \ this single http request.  Returned in responses to aid in debugging and\
+          \ tracking.\n\nEach request should have a unique id. Recommend a random,\
+          \ opaque UUID with no semantic, private, or secure information included.\n\
+          \nIMPORTANT:  This documentation refers to the wrong header name.  Please\
+          \ use \"X-Client-Trace-Id\"\n"
+        required: false
+        type: "string"
+      responses:
+        '200':
+          description: Succesful retrieval of cat
+          schema:
+            $ref: '#/definitions/Cat'
+        '400':
+          description: Bad request
+        '404':
+          description: Cat not found
+  /cats/{cat_id}:
+    get:
+      tags:
+        - cat
+      summary: Retrieve a single cat
+      description: Retrieve a single cat
+      operationId: getCat
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: cat_id
+          description: Id of the cat desired to be retrieved
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Succesful retrieval of cat
+          schema:
+            $ref: '#/definitions/Cat'
+        '400':
+          description: Bad request
+        '404':
+          description: Cat not found
+
+    put:
+      tags:
+        - cat
+      summary: Update an existing cat
+      description: ''
+      operationId: updateCat
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: cat_id
+          description: Id of the cat desired to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Cat object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Cat'
+      responses:
+        '201':
+          description: Succesful update of cat
+          schema:
+            $ref: '#/definitions/Cat'
+        '400':
+          description: Bad request
+        '404':
+          description: Cat not found
+
+    delete:
+      tags:
+        - cat
+      summary: Delete a cat
+      description: Delete a cat
+      operationId: deleteCat
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: cat_id
+          description: Id of the cat desired to be deleted
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Succesful delete of cat
+        '400':
+          description: Bad request
+        '404':
+          description: Cat not found
+
+definitions:
+  Cat:
+    title: Cat
+    description: A cat
+    required:
+      - name
+      - breed
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        description: Name of the cat
+        example: Garfield
+      breed:
+        type: string
+        description: Breed of the cat
+        enum:
+          - Abyssinian
+          - Aegean
+          - American Bobtail
+          - American Curl
+          - American Shorthair
+          - American Wirehair
+          - Arabian Mau
+          - Australian Mist
+          - Balinese
+          - Bambino
+          - Bengal
+          - Birman
+          - Bombay
+          - British Longhair
+          - British Shorthair
+          - Burmese
+          - Burmilla
+          - California Spangled
+          - Chantilly-Tiffany
+          - Chartreux
+          - Chausie
+          - Cheetoh
+          - Colorpoint Shorthair
+          - Cornish Rex
+          - Cymric
+          - Cyprus
+          - Devon Rex
+          - Donskoy
+          - Dragon Li
+          - Egyptian Mau
+          - European Burmese
+          - Exotic Shorthair
+          - Havana Brown
+          - Himalayan
+          - Japanese Bobtail
+          - Javanese
+          - Khao Manee
+          - Korat
+          - Kurilian
+          - LaPerm
+          - Maine Coon
+          - Malayan
+          - Manx
+          - Munchkin
+          - Nebelung
+          - Norwegian Forest Cat
+          - Ocicat
+          - Oriental
+          - Persian
+          - Pixie-bob
+          - Ragamuffin
+          - Ragdoll
+          - Russian Blue
+          - Savannah
+          - Scottish Fold
+          - Selkirk Rex
+          - Siamese
+          - Siberian
+          - Singapura
+          - Snowshoe
+          - Somali
+          - Sphynx
+          - Tonkinese
+          - Toyger
+          - Turkish Angora
+          - Turkish Van
+          - York Chocolate
+  CatsResponse:
+    type: object
+    description: Response object contains all the cats
+    properties:
+      cats:
+        type: array
+        items:
+          $ref: '#/definitions/Cat'
+        description: List of cats
