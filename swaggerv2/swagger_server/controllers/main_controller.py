@@ -1,10 +1,4 @@
-import connexion
-import six
-
-from swagger_server import util
-
-
-def upload_post_default(upfile=None):  # noqa: E501
+def upload_post_jsingh(upfile=None):  # noqa: E501
     """Uploads a file.
 
      # noqa: E501
@@ -14,4 +8,4 @@ def upload_post_default(upfile=None):  # noqa: E501
 
     :rtype: None
     """
-    return 'Jatinder do some magic!'
+    return 'main_controller.upload_post handle jatinder'

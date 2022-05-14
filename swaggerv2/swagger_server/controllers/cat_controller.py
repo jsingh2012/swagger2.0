@@ -4,7 +4,10 @@ import six
 from swagger_server.models.cat import Cat  # noqa: E501
 from swagger_server.models.cats_response import CatsResponse  # noqa: E501
 from swagger_server import util
-
+import swagger_server.controllers.default_controller
+import swagger_server.controllers.main_controller as main_controller
+import pdf2image
+from io import BytesIO
 
 def add_cat(body):  # noqa: E501
     """Add a new cat to the store
@@ -92,7 +95,19 @@ def multi_pages_request(multipages_input, pdf=None, image0=None, image1=None, im
 
     :rtype: Cat
     """
-    return 'do some magic!'
+    str = ""
+    if pdf is not None:
+        str += "PDF FILE IS UPLOADed "
+        pages = pdf2image.convert_from_bytes(pdf.read())
+        count = 0
+        for page in pages:
+            with BytesIO() as buf:
+                filename = f'images/image-{count}.png'
+                page.save(filename, format="PNG")
+                count += 1
+    if image0 is not None:
+        str += "image0 FILE IS UPLOADed "
+    return str+'Jatinderpal singh do some magic! msg from main_controller'
 
 
 def update_cat(cat_id, body):  # noqa: E501
