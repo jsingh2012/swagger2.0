@@ -8,6 +8,7 @@ import swagger_server.controllers.default_controller
 import swagger_server.controllers.main_controller as main_controller
 import pdf2image
 from io import BytesIO
+from flask import Flask, request
 
 def add_cat(body):  # noqa: E501
     """Add a new cat to the store
@@ -61,41 +62,53 @@ def list_cats():  # noqa: E501
     return 'do some magic!'
 
 
-def multi_pages_request(multipages_input, pdf=None, image0=None, image1=None, image2=None, image3=None, image4=None, image5=None, image6=None, image7=None, image8=None, image9=None, X_Client_Trace_Id=None):  # noqa: E501
+def multi_pages_request(multipages_input, pdf=None, images=None, image0=None, image1=None, image2=None, image3=None, image4=None, image5=None, image6=None, image7=None, image8=None, image9=None, X_Client_Trace_Id=None):  # noqa: E501
     """Takes a list of images and run pipeline including stitch
 
     Runs pipeline for the provided images and stitches images that are needed to be stitched. Then, runs the whole pipeline on the stitched image, too. Note: Image is optional if imageN is provided in multi-part formData. See [/multipages/doc](#/OCR/multipages_doc) Note: We officially only support png and jpeg data and the image size is limited to 7000x7000 pixels  # noqa: E501
 
-    :param multipages_input: Important: Due to openapi v2.0 issues, see /multipages_request for input model of multipages_input.  See [/multipages/doc](#/OCR/multipages_doc) 
+    :param multipages_input: Important: Due to openapi v2.0 issues, see /multipages_request for input model of multipages_input.  See [/multipages/doc](#/OCR/multipages_doc)
     :type multipages_input: str
     :param pdf: PDF file content. We will consider imageN parameters only if pdf parameter is missing from request.
     :type pdf: werkzeug.datastructures.FileStorage
-    :param image0: 
+    :param image0:
     :type image0: werkzeug.datastructures.FileStorage
-    :param image1: 
+    :param image1:
     :type image1: werkzeug.datastructures.FileStorage
-    :param image2: 
+    :param image2:
     :type image2: werkzeug.datastructures.FileStorage
-    :param image3: 
+    :param image3:
     :type image3: werkzeug.datastructures.FileStorage
-    :param image4: 
+    :param image4:
     :type image4: werkzeug.datastructures.FileStorage
-    :param image5: 
+    :param image5:
     :type image5: werkzeug.datastructures.FileStorage
-    :param image6: 
+    :param image6:
     :type image6: werkzeug.datastructures.FileStorage
-    :param image7: 
+    :param image7:
     :type image7: werkzeug.datastructures.FileStorage
-    :param image8: 
+    :param image8:
     :type image8: werkzeug.datastructures.FileStorage
-    :param image9: 
+    :param image9:
     :type image9: werkzeug.datastructures.FileStorage
-    :param X_Client_Trace_Id: Optional, unique ID provided by the caller of the API to track this single http request.  Returned in responses to aid in debugging and tracking.  Each request should have a unique id. Recommend a random, opaque UUID with no semantic, private, or secure information included.  IMPORTANT:  This documentation refers to the wrong header name.  Please use \&quot;X-Client-Trace-Id\&quot; 
+    :param X_Client_Trace_Id: Optional, unique ID provided by the caller of the API to track this single http request.  Returned in responses to aid in debugging and tracking.  Each request should have a unique id. Recommend a random, opaque UUID with no semantic, private, or secure information included.  IMPORTANT:  This documentation refers to the wrong header name.  Please use \&quot;X-Client-Trace-Id\&quot;
     :type X_Client_Trace_Id: str
 
     :rtype: Cat
     """
     str = ""
+    """
+    if images:
+        str += "images"
+        filename = f'images/imagetest.png'
+        images.save(filename)
+    """
+    files = request.files
+    myfile = files.getlist("images")
+    for i in range(len(myfile)):
+        filename = f'images/image-{i}.png'
+        myfile[i].save(filename)
+
     if pdf is not None:
         str += "PDF FILE IS UPLOADed "
         pages = pdf2image.convert_from_bytes(pdf.read())

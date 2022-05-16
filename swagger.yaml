@@ -76,6 +76,14 @@ paths:
           \ pdf parameter is missing from request."
         required: false
         type: "file"
+      - name: "images"
+        in: "formData"
+        description: "multiple file content. We will consider imageN parameters only"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          format: "binary"
       - name: "image0"
         in: "formData"
         required: false
