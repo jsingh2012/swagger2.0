@@ -1,4 +1,5 @@
 attrs==21.4.0
+binary==1.0.0
 certifi==2021.10.8
 charset-normalizer==2.0.12
 click==8.0.4
@@ -6,6 +7,7 @@ clickclick==20.10.2
 connexion==2.13.1
 dataclasses==0.8
 Flask==2.0.3
+Flask-MySQLdb==1.0.1
 idna==3.3
 importlib-metadata==4.8.3
 inflection==0.5.1
@@ -13,9 +15,14 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 jsonschema==4.0.0
 MarkupSafe==2.0.1
+mysql==0.0.3
+mysql-connector==2.2.9
+mysql-connector-python==8.0.29
+mysqlclient==2.1.0
 packaging==21.3
 pdf2image==1.16.0
 Pillow==8.4.0
+protobuf==3.19.4
 pyparsing==3.0.9
 pyrsistent==0.18.0
 python-dateutil==2.6.0
