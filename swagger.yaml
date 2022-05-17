@@ -233,6 +233,39 @@ paths:
           description: Cat not found
 
 definitions:
+  Book:
+    title: Book
+    description: A book
+    required:
+      - ISBN
+      - title
+      - edition
+      - authorid
+      - price
+      - category
+    properties:
+      ISBN:
+        type: string
+        description: ISBN number of the book
+        example: 978-3-16-148410-0
+      title:
+        type: string
+        description: Name of the book
+      edition:
+        type: integer
+      price:
+        type: integer
+      category:
+        type: string
+        description: Category of the book
+        enum:
+          - noval
+          - general
+          - story
+      authorid:
+        type: string
+      details:
+        type: string
   Cat:
     title: Cat
     description: A cat
@@ -256,67 +289,6 @@ definitions:
           - American Curl
           - American Shorthair
           - American Wirehair
-          - Arabian Mau
-          - Australian Mist
-          - Balinese
-          - Bambino
-          - Bengal
-          - Birman
-          - Bombay
-          - British Longhair
-          - British Shorthair
-          - Burmese
-          - Burmilla
-          - California Spangled
-          - Chantilly-Tiffany
-          - Chartreux
-          - Chausie
-          - Cheetoh
-          - Colorpoint Shorthair
-          - Cornish Rex
-          - Cymric
-          - Cyprus
-          - Devon Rex
-          - Donskoy
-          - Dragon Li
-          - Egyptian Mau
-          - European Burmese
-          - Exotic Shorthair
-          - Havana Brown
-          - Himalayan
-          - Japanese Bobtail
-          - Javanese
-          - Khao Manee
-          - Korat
-          - Kurilian
-          - LaPerm
-          - Maine Coon
-          - Malayan
-          - Manx
-          - Munchkin
-          - Nebelung
-          - Norwegian Forest Cat
-          - Ocicat
-          - Oriental
-          - Persian
-          - Pixie-bob
-          - Ragamuffin
-          - Ragdoll
-          - Russian Blue
-          - Savannah
-          - Scottish Fold
-          - Selkirk Rex
-          - Siamese
-          - Siberian
-          - Singapura
-          - Snowshoe
-          - Somali
-          - Sphynx
-          - Tonkinese
-          - Toyger
-          - Turkish Angora
-          - Turkish Van
-          - York Chocolate
   CatsResponse:
     type: object
     description: Response object contains all the cats
