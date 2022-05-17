@@ -3,5 +3,6 @@
 # flake8: noqa
 from __future__ import absolute_import
 # import models into model package
+from swagger_server.models.book import Book
 from swagger_server.models.cat import Cat
 from swagger_server.models.cats_response import CatsResponse
