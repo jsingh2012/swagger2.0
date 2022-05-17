@@ -10,9 +10,36 @@ produces:
 tags:
   - name: cat
     description: Everything about your Cats
+  - name: book
+    description: controller for book
 schemes:
   - http
 paths:
+  /book/add:
+    post:
+      tags:
+        - book
+      summary: Add a new book to the Library
+      description: Creates a new book in the Library
+      operationId: addbook
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Book object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '201':
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Book'
+        '400':
+          description: Bad request
   /cats:
     post:
       tags:

@@ -7,6 +7,8 @@ info:
 tags:
 - name: "cat"
   description: "Everything about your Cats"
+- name: "book"
+  description: "controller for book"
 schemes:
 - "http"
 consumes:
@@ -14,6 +16,32 @@ consumes:
 produces:
 - "application/json"
 paths:
+  /book/add:
+    post:
+      tags:
+      - "book"
+      summary: "Add a new book to the Library"
+      description: "Creates a new book in the Library"
+      operationId: "addbook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Book"
+      responses:
+        "201":
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/Book"
+        "400":
+          description: "Bad request"
+      x-swagger-router-controller: "swagger_server.controllers.book_controller"
   /cats:
     get:
       tags:
@@ -271,6 +299,14 @@ definitions:
         type: "string"
     title: "Book"
     description: "A book"
+    example:
+      ISBN: "978-3-16-148410-0"
+      price: 6
+      edition: 0
+      details: "details"
+      title: "title"
+      category: "noval"
+      authorid: "authorid"
   Cat:
     required:
     - "breed"
